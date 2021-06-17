@@ -34,9 +34,12 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
             **/
 
             // Get data form url
-            $limit = isset( $_GET['limit'] ) ? $_GET['limit'] : '10';
+            $default_posts_per_page = get_option( 'posts_per_page' );
+            $limit = isset( $_GET['limit'] ) ? $_GET['limit'] : '';
+            if( empty( $limit ) ){ $limit = $default_posts_per_page; }
             $type = isset( $_GET['type'] ) ? $_GET['type'] : '';
             $c_page = isset( $_GET['c_page'] ) ? $_GET['c_page'] : '';
+            $fields = isset( $_GET['fields'] ) ? $_GET['fields'] : '';
 
             // arga for event post query
             $args_new  =  array(
@@ -55,7 +58,14 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                     ),
                 );
             }
-
+            $ed_content = false;
+            $ed_terms = false;
+            $ed_tags = false;
+            if( $fields && is_array( $fields ) ){
+                if( in_array(  'content', $fields ) ){ $ed_content = true; }
+                if( in_array(  'terms', $fields ) ){ $ed_terms = true; }
+                if( in_array(  'tags', $fields ) ){ $ed_tags = true; }
+            }
             // Query for event posts
             $loop_new = new WP_Query($args_new);
 
@@ -69,14 +79,24 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                     $event_location = get_post_meta( get_the_ID(), 'outside_event_location', true );
                     $event_date = get_post_meta( get_the_ID(), 'outside_event_date', true );
                     $event_time = get_post_meta( get_the_ID(), 'outside_event_time', true );
+                    $term_list = wp_get_post_terms(get_the_ID(), 'event-type', array("fields" => "all"));
+                    $taga_list = wp_get_post_terms(get_the_ID(), 'event-tag', array("fields" => "all"));
+
+                    $excerpt = '';
+                    if( has_excerpt() ){
+                        $excerpt = get_the_excerpt();
+                    }else{
+                        $excerpt = '<p>'.esc_html( wp_trim_words( get_the_content(),25,'...' ) ).'</p>';
+                    }
 
                     $post_data[] = array(
                         'url' => get_the_permalink(),
                         'title' => get_the_title(),
-                        'content' => get_the_content(),
+                        'excerpt' => $excerpt,
+                        'content' => $ed_content ? get_the_content() : '',
+                        'terms' => $ed_terms ? $term_list : '',
+                        'tags' => $ed_tags ? $taga_list : '',
                         'image' => $featured_image,
-                        'tags' => '',
-                        'terms' => '',
                         'location' => $event_location,
                         'date' =>  $event_date,
                         'posted_date' =>  get_the_date( get_option('date_formate') ),
