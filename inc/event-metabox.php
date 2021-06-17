@@ -32,7 +32,7 @@ if( ! function_exists( 'outside_event_post_meta_callback' ) ):
 
         wp_nonce_field( basename( __FILE__ ), 'outside_event_event_meta_nonce' );
         $outside_event_location = get_post_meta( $post->ID, 'outside_event_location', true );
-        $outside_event_date = get_post_meta( $post->ID, 'outside_event_date', true );
+        $outside_event_month = get_post_meta( $post->ID, 'outside_event_month', true );
         $outside_event_time = get_post_meta( $post->ID, 'outside_event_time', true );
         ?>
 
@@ -49,8 +49,32 @@ if( ! function_exists( 'outside_event_post_meta_callback' ) ):
             <tr>
                 <td>
                     <label><?php esc_html_e('Event Date','outside-event'); ?></label>
-                    <input class="oe-date-pick" type="text" name="outside_event_date" value="<?php echo esc_attr( $outside_event_date ); ?>" />
                     
+                    <select name="outside_event_month">
+
+                        <?php
+                        $months = array(
+                            'January',
+                            'February',
+                            'March',
+                            'April',
+                            'May',
+                            'June',
+                            'July ',
+                            'August',
+                            'September',
+                            'October',
+                            'November',
+                            'December',
+                        );
+                        foreach( $months as $key => $month ){ ?>
+
+                         <option value="<?php echo esc_attr( $month ); ?>" <?php if( $month == $outside_event_month ){ echo 'selected'; } ?> ><?php echo esc_html( $month ); ?></option>
+
+                        <?php } ?>
+
+                      </select>
+
                 </td>
             </tr>
 
@@ -107,16 +131,16 @@ function outside_event_save_post_meta( $post_id ) {
 
     }
 
-    $outside_event_date_old = esc_html( get_post_meta( $post_id, 'outside_event_date', true ) ); 
-    $outside_event_date_new = sanitize_text_field( wp_unslash( $_POST['outside_event_date'] ));
+    $outside_event_month_old = esc_html( get_post_meta( $post_id, 'outside_event_month', true ) ); 
+    $outside_event_month_new = sanitize_text_field( wp_unslash( $_POST['outside_event_month'] ));
 
-    if ( $outside_event_date_new && $outside_event_date_new != $outside_event_date_old ) {
+    if ( $outside_event_month_new && $outside_event_month_new != $outside_event_month_old ) {
 
-        update_post_meta ( $post_id, 'outside_event_date', $outside_event_date_new );
+        update_post_meta ( $post_id, 'outside_event_month', $outside_event_month_new );
 
-    } elseif ( '' == $outside_event_date_new && $outside_event_date_old ) {
+    } elseif ( '' == $outside_event_month_new && $outside_event_month_old ) {
 
-        delete_post_meta( $post_id,'outside_event_date', $outside_event_date_old );
+        delete_post_meta( $post_id,'outside_event_month', $outside_event_month_old );
 
     }
 

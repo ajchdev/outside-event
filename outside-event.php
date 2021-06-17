@@ -32,11 +32,13 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
             // Add a filter to 'template_include' hook
             add_filter( 'template_include',array( $this,'outside_event_template' ) );
             add_action( 'admin_enqueue_scripts',array( $this,'outside_event_backend_scripts' ) );
+            add_action( 'wp_enqueue_scripts',array( $this,'outside_event_frontend_scripts' ) );
             
     		include_once OUTSIDE_EVENT_PATH . 'inc/event-post-type.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/event-metabox.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/event-custom-api.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/event-shortcode.php';
+            include_once OUTSIDE_EVENT_PATH . 'inc/ajax.php';
 
 	    }
 
@@ -56,13 +58,24 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
 
 	    public function outside_event_backend_scripts(){
 
-            // Load the datepicker style (pre-registered in WordPress).
-            wp_enqueue_style( 'jquery-ui' ); 
-            
-            // Load the datepicker script (pre-registered in WordPress).
-            wp_enqueue_script( 'jquery-ui-datepicker' );
-
             wp_enqueue_script( 'outside-event-admin', OUTSIDE_EVENT_URL . 'assets/js/admin.js', array('jquery'), true );
+
+        }
+
+        public function outside_event_frontend_scripts(){
+
+            wp_enqueue_script( 'outside-event-custom', OUTSIDE_EVENT_URL . 'assets/js/custom.js', array('jquery'), true );
+
+            $ajax_nonce = wp_create_nonce('outside_event_ajax_nonce');
+                
+            wp_localize_script( 
+                'outside-event-custom', 
+                'outside_event_custom',
+                array(
+                    'ajax_url'   => esc_url( admin_url( 'admin-ajax.php' ) ),
+                    'ajax_nonce' => $ajax_nonce,
+                 )
+            );
 
         }
 

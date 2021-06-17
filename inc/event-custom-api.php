@@ -38,8 +38,10 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
             $limit = isset( $_GET['limit'] ) ? $_GET['limit'] : '';
             if( empty( $limit ) ){ $limit = $default_posts_per_page; }
             $type = isset( $_GET['type'] ) ? $_GET['type'] : '';
+            $tags = isset( $_GET['tags'] ) ? $_GET['tags'] : '';
             $c_page = isset( $_GET['c_page'] ) ? $_GET['c_page'] : '';
             $fields = isset( $_GET['fields'] ) ? $_GET['fields'] : '';
+            $month = isset( $_GET['month'] ) ? $_GET['month'] : '';
 
             // arga for event post query
             $args_new  =  array(
@@ -48,16 +50,38 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
               'paged'           => $c_page,
             );
 
+
+            $args_new['tax_query'] = array(
+                'relation' => 'AND',
+            );
+
             if( $type ){
 
-                $args_new['tax_query'] = array(
-                    array(
+                $args_new['tax_query'][] = array(
                         'taxonomy' => 'event-type',
-                        'field'    => 'term_id',
+                        'field'    => 'slug',
                         'terms'    => $type,
-                    ),
+                    );
+            }
+
+            if( $tags ){
+
+                $args_new['tax_query'][] = array(
+                        'taxonomy' => 'event-tag',
+                        'field'    => 'slug',
+                        'terms'    => $tags,
+                    );
+            }
+
+            if( $month ){
+                $args_new['meta_query'] = array(
+                    array(
+                        'key'       => 'outside_event_month',
+                        'value'     => $month,
+                    )
                 );
             }
+
             $ed_content = false;
             $ed_terms = false;
             $ed_tags = false;
@@ -77,7 +101,7 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                     $featured_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
                     $featured_image = isset( $featured_image[0] ) ? $featured_image[0] : '';
                     $event_location = get_post_meta( get_the_ID(), 'outside_event_location', true );
-                    $event_date = get_post_meta( get_the_ID(), 'outside_event_date', true );
+                    $event_date = get_post_meta( get_the_ID(), 'outside_event_month', true );
                     $event_time = get_post_meta( get_the_ID(), 'outside_event_time', true );
                     $term_list = wp_get_post_terms(get_the_ID(), 'event-type', array("fields" => "all"));
                     $taga_list = wp_get_post_terms(get_the_ID(), 'event-tag', array("fields" => "all"));
@@ -102,6 +126,7 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                         'posted_date' =>  get_the_date( get_option('date_formate') ),
                         'time' =>  $event_time,
                         'post_id' => get_the_ID(),
+                        'args_new' => $args_new,
                     );
 
                 endwhile;
