@@ -86,10 +86,13 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
             $ed_terms = false;
             $ed_tags = false;
             if( $fields && is_array( $fields ) ){
+
                 if( in_array(  'content', $fields ) ){ $ed_content = true; }
                 if( in_array(  'terms', $fields ) ){ $ed_terms = true; }
                 if( in_array(  'tags', $fields ) ){ $ed_tags = true; }
+
             }
+            
             // Query for event posts
             $loop_new = new WP_Query($args_new);
 
@@ -105,7 +108,8 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                     $event_time = get_post_meta( get_the_ID(), 'outside_event_time', true );
                     $term_list = wp_get_post_terms(get_the_ID(), 'event-type', array("fields" => "all"));
                     $taga_list = wp_get_post_terms(get_the_ID(), 'event-tag', array("fields" => "all"));
-
+                    $event_day = get_post_meta( get_the_ID(), 'outside_event_day', true );
+                    $event_year = get_post_meta( get_the_ID(), 'outside_event_year', true );
                     $excerpt = '';
                     if( has_excerpt() ){
                         $excerpt = get_the_excerpt();
@@ -125,6 +129,8 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                         'date' =>  $event_date,
                         'posted_date' =>  get_the_date( get_option('date_formate') ),
                         'time' =>  $event_time,
+                        'event_day' =>  $event_day,
+                        'event_year' =>  $event_year,
                         'post_id' => get_the_ID(),
                         // 'args_new' =>  $args_new,
                     );

@@ -1,0 +1,22 @@
+.filter-fields {
+    display: inline-block;
+    padding: 20px;
+}
+.events-lists-wrap article, .event-container article {
+    margin-bottom: 71px;
+    border: solid 1px #dddddd;
+    padding: 20px;
+}
+.otuside-pagination-wpap a {
+    padding: 15px 20px;
+    border: solid 1px #6c6c6c;
+    display: block;
+    width: 200px;
+    text-align: center;
+    background: #747474;
+    color: #fff;
+    font-size: 16px;
+}
+.otuside-pagination-wpap {
+    margin-bottom: 100px;
+}

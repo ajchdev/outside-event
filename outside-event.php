@@ -40,6 +40,7 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
             include_once OUTSIDE_EVENT_PATH . 'inc/event-shortcode.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/ajax.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/gutenberg-slider-block.php';
+            include_once OUTSIDE_EVENT_PATH . 'inc/render.php';
 
 	    }
 

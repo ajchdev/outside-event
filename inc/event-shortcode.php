@@ -164,10 +164,8 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
             }
           
             // $data['fields'] = array('content1','image1','tags1','terms1');
-            // $data['month'] = 'August';
             $data = http_build_query($data) . "\n";
 
-            // echo home_url().'/wp-json/outside-event/events?'.$data;
             $event_content = wp_remote_get(  home_url().'/wp-json/outside-event/events?'.$data );
             $event_content = isset( $event_content['body'] ) ? $event_content['body'] : '';
             
@@ -175,41 +173,14 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
 
             $event_content = json_decode( $event_content );
             $event_content = json_decode( $event_content );
-            // print_r(  $event_content );
+
             if( $event_content ){
             echo '<div class="events-lists-wrap">';
 
             foreach( $event_content as $event){ 
+              
+              outside_event_frontend_render_events($event);
 
-              $url = isset(  $event->url ) ? $event->url : '';
-              $title = isset( $event->title ) ? $event->title : '';
-              $excerpt = isset(  $event->excerpt ) ? $event->excerpt : '';
-              $image = isset(  $event->image ) ? $event->image : ''; ?>
-
-              <article>
-
-                <div class="event-content-wraper">
-
-                  <?php
-
-                  if(  $image ){
-                    echo '<img src="' . esc_url( $image ) .'"/>';
-                  }
-
-                    echo '<h2><a href="' . esc_url( $url ) . '" rel="bookmark">'.esc_html( wp_trim_words( $title,20,'...' ) ).'</a></h2>';
-                  ?>
-
-                  <?php if($excerpt){ ?>
-                    <div class="entry-content">
-                    <?php echo wp_kses_post( $excerpt ); ?>
-                    </div><!-- .entry-content -->
-                  <?php } ?>
-                  
-                </div>
-
-              </article><!-- #post-<?php the_ID(); ?> -->
-
-            <?php
             }
             echo '</div>';
           }
@@ -239,7 +210,7 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
         $limit = isset( $inputs['limit'] ) ? $inputs['limit'] : ''; ?> 
             
             <div class="otuside-pagination-wpap">
-              <a href="javascript:void(0)" class="otuside-pagination" paged-data="2" data-limit="<?php echo esc_attr( $limit ); ?>"><?php esc_html_e('Load MoreEvents','outside-event'); ?></a></div>
+              <a href="javascript:void(0)" class="otuside-pagination" paged-data="2" data-limit="<?php echo esc_attr( $limit ); ?>"><?php esc_html_e('Load More Events','outside-event'); ?></a></div>
 
         <?php
         }

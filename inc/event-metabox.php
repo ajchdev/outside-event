@@ -33,6 +33,8 @@ if( ! function_exists( 'outside_event_post_meta_callback' ) ):
         wp_nonce_field( basename( __FILE__ ), 'outside_event_event_meta_nonce' );
         $outside_event_location = get_post_meta( $post->ID, 'outside_event_location', true );
         $outside_event_month = get_post_meta( $post->ID, 'outside_event_month', true );
+        $outside_event_day = get_post_meta( $post->ID, 'outside_event_day', true );
+        $outside_event_year = get_post_meta( $post->ID, 'outside_event_year', true );
         $outside_event_time = get_post_meta( $post->ID, 'outside_event_time', true );
         ?>
 
@@ -48,7 +50,7 @@ if( ! function_exists( 'outside_event_post_meta_callback' ) ):
 
             <tr>
                 <td>
-                    <label><?php esc_html_e('Event Date','outside-event'); ?></label>
+                    <label><?php esc_html_e('Event Month','outside-event'); ?></label>
                     
                     <select name="outside_event_month">
 
@@ -75,6 +77,33 @@ if( ! function_exists( 'outside_event_post_meta_callback' ) ):
 
                       </select>
 
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label><?php esc_html_e('Event Day','outside-event'); ?></label>
+                    
+                    <select name="outside_event_day">
+
+                        <?php
+                       
+                        for ($x = 1; $x <= 32; $x++) { ?>
+
+                         <option value="$x" <?php if( $x == $outside_event_day ){ echo 'selected'; } ?> ><?php echo esc_html( $x ); ?></option>
+
+                        <?php } ?>
+
+                      </select>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label><?php esc_html_e('Event Year','outside-event'); ?></label>
+                    <input type="text" name="outside_event_year" value="<?php echo esc_attr( $outside_event_year ); ?>" />
+                    
                 </td>
             </tr>
 
@@ -154,6 +183,32 @@ function outside_event_save_post_meta( $post_id ) {
     } elseif ( '' == $outside_event_time_new && $outside_event_time_old ) {
 
         delete_post_meta( $post_id,'outside_event_time', $outside_event_time_old );
+
+    }
+
+    $outside_event_day_old = esc_html( get_post_meta( $post_id, 'outside_event_day', true ) ); 
+    $outside_event_day_new = sanitize_text_field( wp_unslash( $_POST['outside_event_day'] ));
+
+    if ( $outside_event_day_new && $outside_event_day_new != $outside_event_day_old ) {
+
+        update_post_meta ( $post_id, 'outside_event_day', $outside_event_day_new );
+
+    } elseif ( '' == $outside_event_day_new && $outside_event_day_old ) {
+
+        delete_post_meta( $post_id,'outside_event_day', $outside_event_day_old );
+
+    }
+
+    $outside_event_year_old = esc_html( get_post_meta( $post_id, 'outside_event_year', true ) ); 
+    $outside_event_year_new = sanitize_text_field( wp_unslash( $_POST['outside_event_year'] ));
+
+    if ( $outside_event_year_new && $outside_event_year_new != $outside_event_year_old ) {
+
+        update_post_meta ( $post_id, 'outside_event_year', $outside_event_year_new );
+
+    } elseif ( '' == $outside_event_year_new && $outside_event_year_old ) {
+
+        delete_post_meta( $post_id,'outside_event_year', $outside_event_year_old );
 
     }
 
