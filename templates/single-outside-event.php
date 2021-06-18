@@ -27,15 +27,13 @@ get_header(); ?>
 	        $excerpt = '<p>'.esc_html( wp_trim_words( get_the_content(),25,'...' ) ).'</p>';
 	    }
 
-		// print_r( $event );
-        $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
+      $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
 	    $image = isset( $image[0] ) ? $image[0] : '';
-
-        $posted_date = get_the_date( get_option('date_formate') );
-        $month = get_post_meta( get_the_ID(), 'outside_event_month', true );
-        $event_day = get_post_meta( get_the_ID(), 'outside_event_day', true );
-        $event_year = get_post_meta( get_the_ID(), 'outside_event_year', true );
-        $location = get_post_meta( get_the_ID(), 'outside_event_location', true );
+      $posted_date = get_the_date( get_option('date_formate') );
+      $month = get_post_meta( get_the_ID(), 'outside_event_month', true );
+      $event_day = get_post_meta( get_the_ID(), 'outside_event_day', true );
+      $event_year = get_post_meta( get_the_ID(), 'outside_event_year', true );
+      $location = get_post_meta( get_the_ID(), 'outside_event_location', true );
 
        ?>
        <article>
@@ -47,12 +45,12 @@ get_header(); ?>
           if(  $image ){
             echo '<img src="' . esc_url( $image ) .'"/>';
           }
-          
-			if ( is_singular() ) :
-				the_title( '<h1>', '</h1>' );
-			else :
-				echo '<h2><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">'.esc_html( wp_trim_words( get_the_title(),20,'...' ) ).'</a></h2>';
-			endif;
+              
+    			if ( is_singular() ) :
+    				the_title( '<h1>', '</h1>' );
+    			else :
+    				echo '<h2><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">'.esc_html( wp_trim_words( get_the_title(),20,'...' ) ).'</a></h2>';
+    			endif;
 
           if($excerpt){ ?>
             <div class="entry-content">
