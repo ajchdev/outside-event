@@ -126,6 +126,7 @@ if ( ! class_exists( 'Outside_Event_Custom_API' ) ) {
                         'posted_date' =>  get_the_date( get_option('date_formate') ),
                         'time' =>  $event_time,
                         'post_id' => get_the_ID(),
+                        // 'args_new' =>  $args_new,
                     );
 
                 endwhile;

@@ -159,11 +159,15 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
             $data['limit'] = $limit;
             }
 
-            $data['c_page'] = $c_page;
-            $data['fields'] = array('content1','image1','tags1','terms1');
+            if( $c_page ){
+              $data['c_page'] = $c_page;
+            }
+          
+            // $data['fields'] = array('content1','image1','tags1','terms1');
             // $data['month'] = 'August';
             $data = http_build_query($data) . "\n";
 
+            // echo home_url().'/wp-json/outside-event/events?'.$data;
             $event_content = wp_remote_get(  home_url().'/wp-json/outside-event/events?'.$data );
             $event_content = isset( $event_content['body'] ) ? $event_content['body'] : '';
             
@@ -171,20 +175,27 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
 
             $event_content = json_decode( $event_content );
             $event_content = json_decode( $event_content );
-            
+            // print_r(  $event_content );
+            if( $event_content ){
             echo '<div class="events-lists-wrap">';
 
             foreach( $event_content as $event){ 
 
               $url = isset(  $event->url ) ? $event->url : '';
               $title = isset( $event->title ) ? $event->title : '';
-              $excerpt = isset(  $event->excerpt ) ? $event->excerpt : ''; ?>
+              $excerpt = isset(  $event->excerpt ) ? $event->excerpt : '';
+              $image = isset(  $event->image ) ? $event->image : ''; ?>
 
-              <article <?php post_class(); ?>>
+              <article>
 
                 <div class="event-content-wraper">
 
                   <?php
+
+                  if(  $image ){
+                    echo '<img src="' . esc_url( $image ) .'"/>';
+                  }
+
                     echo '<h2><a href="' . esc_url( $url ) . '" rel="bookmark">'.esc_html( wp_trim_words( $title,20,'...' ) ).'</a></h2>';
                   ?>
 
@@ -201,7 +212,7 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
             <?php
             }
             echo '</div>';
-
+          }
             }
 
         }

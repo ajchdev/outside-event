@@ -4,14 +4,13 @@ jQuery(document).ready(function($) {
 	var ajaxurl = outside_event_custom.ajax_url;
     var ajaxNonce = outside_event_custom.ajax_nonce;
 
+    // Filter Form Submit
     $('.event-filter-form').submit(function(){
 
-    	// alert();
     	var month = $(this).find('.filter-event-month').val();
     	var type = $(this).find('.filter-event-type').val();
     	var tags = $(this).find('.filter-event-tags').val();
         var limit = $(this).find('.filter-event-limit').val();
-
         var c_element = $(this);
     	var data = {
 	        'action': 'outside_event_event_filter',
@@ -26,7 +25,6 @@ jQuery(document).ready(function($) {
 
 	    	$(c_element).closest('.outside-events-lists').find('.events-lists-wrap').empty();
 	    	$(c_element).closest('.outside-events-lists').find('.events-lists-wrap').html( response );
-	    	alert();
 		        
 	    });
 
@@ -34,6 +32,7 @@ jQuery(document).ready(function($) {
 
     });
     
+    // Gutenberg slider frontend
     $(".outside-event-slider").each(function () {
 
         $(this).slick({
@@ -48,13 +47,12 @@ jQuery(document).ready(function($) {
 
     });
 
+    // Click On pagination
     $('.otuside-pagination').click(function(){
 
         var month = $(this).closest('.outside-events-lists').find('.filter-event-month').val();
         var type = $(this).closest('.outside-events-lists').find('.filter-event-type').val();
         var tags = $(this).closest('.outside-events-lists').find('.filter-event-tags').val();
-
-        // alert();
         var month = $(this).closest('.outside-events-lists').find('.filter-event-month').val();
         var type = $(this).closest('.outside-events-lists').find('.filter-event-type').val();
         var tags = $(this).closest('.outside-events-lists').find('.filter-event-tags').val();
@@ -75,13 +73,15 @@ jQuery(document).ready(function($) {
         $.post(ajaxurl, data, function( response ) {
 
             if( response ){
+
                 paged++;
                 $(c_element).closest('.outside-events-lists').find('.otuside-pagination').attr('paged-data',paged);
-
-                // $(c_element).closest('.outside-events-lists').find('.events-lists-wrap').empty();
                 $(c_element).closest('.outside-events-lists').find('.events-lists-wrap').append( response );
+
             }else{
+
                 $(c_element).closest('.outside-events-lists').find('.otuside-pagination').html( outside_event_custom.no_posts );
+
             }
                 
         });

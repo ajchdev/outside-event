@@ -37,27 +37,33 @@ if( !function_exists( 'outside_event_event_filter' ) ):
 
 	            foreach( $event_content as $event){ 
 
-                      $url = isset(  $event->url ) ? $event->url : '';
-                      $title = isset( $event->title ) ? $event->title : '';
-                      $excerpt = isset(  $event->excerpt ) ? $event->excerpt : ''; ?>
+                $url = isset(  $event->url ) ? $event->url : '';
+                $title = isset( $event->title ) ? $event->title : '';
+                $excerpt = isset(  $event->excerpt ) ? $event->excerpt : '';
+                $image = isset(  $event->image ) ? $event->image : ''; ?>
 
-                      <article <?php post_class(); ?>>
+                <article>
 
-                        <div class="event-content-wraper">
+                  <div class="event-content-wraper">
 
-                          <?php
-                            echo '<h2><a href="' . esc_url( $url ) . '" rel="bookmark">'.esc_html( wp_trim_words( $title,20,'...' ) ).'</a></h2>';
-                          ?>
+                    <?php
 
-                          <?php if($excerpt){ ?>
-                            <div class="entry-content">
-                            <?php echo wp_kses_post( $excerpt ); ?>
-                            </div><!-- .entry-content -->
-                          <?php } ?>
-                          
-                        </div>
+                    if(  $image ){
+                      echo '<img src="' . esc_url( $image ) .'"/>';
+                    }
 
-                      </article><!-- #post-<?php the_ID(); ?> -->
+                    echo '<h2><a href="' . esc_url( $url ) . '" rel="bookmark">'.esc_html( wp_trim_words( $title,20,'...' ) ).'</a></h2>';
+                    ?>
+
+                    <?php if($excerpt){ ?>
+                      <div class="entry-content">
+                        <?php echo wp_kses_post( $excerpt ); ?>
+                      </div><!-- .entry-content -->
+                    <?php } ?>
+
+                  </div>
+
+                </article><!-- #post-<?php the_ID(); ?> -->
 
                     <?php
                     }
@@ -105,13 +111,19 @@ if( !function_exists( 'outside_event_event_pagination' ) ):
 
                       $url = isset(  $event->url ) ? $event->url : '';
                       $title = isset( $event->title ) ? $event->title : '';
-                      $excerpt = isset(  $event->excerpt ) ? $event->excerpt : ''; ?>
+                      $excerpt = isset(  $event->excerpt ) ? $event->excerpt : '';
+                      $image = isset(  $event->image ) ? $event->image : ''; ?>
 
-                      <article <?php post_class(); ?>>
+                      <article>
 
                         <div class="event-content-wraper">
 
                           <?php
+
+                          if(  $image ){
+                            echo '<img src="' . esc_url( $image ) .'"/>';
+                          }
+
                             echo '<h2><a href="' . esc_url( $url ) . '" rel="bookmark">'.esc_html( wp_trim_words( $title,20,'...' ) ).'</a></h2>';
                           ?>
 
