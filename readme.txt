@@ -5,15 +5,18 @@ Simpally show event lists by shortcode with pagination and filters.
 
 == How To Use ==
 
-1. The shortcode "[event]" will show latest events.
+1. Please go to Dashboard->Events to add events.
 
-2. The shortcode "[event limit=5]" will show latest 5 events.
+2. The shortcode "[event]" will show latest events.
 
-3. The shortcode "[event type=music limit=5]" will show latest 5 events from music Event Type category.
+3. The shortcode "[event limit=5]" will show latest 5 events.
 
-3. The shortcode "[event filter=show limit=5]" will show latest 5 events with filter.
+4. The shortcode "[event type=music limit=5]" will show latest 5 events from music Event Type category.
 
-3. The shortcode "[event filter=show limit=5 pagination=show]" will show latest 5 events with filter and pagination. Pagination will load next 5 events on click.
+5. The shortcode "[event filter=show limit=5]" will show latest 5 events with filter.
+
+6. The shortcode "[event filter=show limit=5 pagination=show]" will show latest 5 events with filter and pagination. Pagination will load next 5 events on click.
+
 
 == Credits ==
 
