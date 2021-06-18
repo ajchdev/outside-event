@@ -1,0 +1,21 @@
+{
+    "name": "outside-event-guten-block",
+    "version": "1.0.0",
+    "description": "Guten Berg Blocks",
+    "main": "index.js",
+    "scripts": {
+        "start": "wp-scripts start",
+        "build": "wp-scripts build"
+    },
+    "author": "Ajay Chaudhary",
+    "license": "MIT",
+    "devDependencies": {
+        "@wordpress/scripts": "^10.0.0"
+    },
+    "dependencies": {
+        "@wordpress/block-editor": "^4.3.2",
+        "@wordpress/blocks": "^6.25.2",
+        "react-slick": "^0.28.1",
+        "slick-carousel": "^1.8.1"
+    }
+}

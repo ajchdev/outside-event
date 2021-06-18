@@ -39,6 +39,7 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
             include_once OUTSIDE_EVENT_PATH . 'inc/event-custom-api.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/event-shortcode.php';
             include_once OUTSIDE_EVENT_PATH . 'inc/ajax.php';
+            include_once OUTSIDE_EVENT_PATH . 'inc/gutenberg-slider-block.php';
 
 	    }
 
@@ -58,12 +59,16 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
 
 	    public function outside_event_backend_scripts(){
 
-            wp_enqueue_script( 'outside-event-admin', OUTSIDE_EVENT_URL . 'assets/js/admin.js', array('jquery'), true );
+            wp_enqueue_style( 'outside-event-editor', plugins_url( 'assets/css/editor.css', __FILE__ ), [], false, 'all' );
 
         }
 
         public function outside_event_frontend_scripts(){
 
+            wp_enqueue_style( 'slick', OUTSIDE_EVENT_URL . '/assets/slick/css/slick.min.css');
+            wp_enqueue_style( 'outside-event-style', plugins_url( 'assets/css/style.css', __FILE__ ), [], false, 'all' );
+
+            wp_enqueue_script( 'slick', OUTSIDE_EVENT_URL . '/assets/slick/js/slick.min.js', array('jquery'), '', 1);
             wp_enqueue_script( 'outside-event-custom', OUTSIDE_EVENT_URL . 'assets/js/custom.js', array('jquery'), true );
 
             $ajax_nonce = wp_create_nonce('outside_event_ajax_nonce');
@@ -74,6 +79,7 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
                 array(
                     'ajax_url'   => esc_url( admin_url( 'admin-ajax.php' ) ),
                     'ajax_nonce' => $ajax_nonce,
+                    'no_posts' => esc_html__e('No More Posts','outside-event'),
                  )
             );
 
@@ -83,4 +89,4 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
 
     $GLOBALS[ 'outside_event_global' ] = new Outside_Event_Class();
 
-endif; ?>
+endif;
