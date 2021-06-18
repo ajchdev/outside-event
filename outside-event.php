@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 * Plugin Name: Outside Event
 * Version: 1.0.0
 * Plugin URI:
-* Description: This plugin manage to show event lists with filter functionality.
+* Description: Simpally show event lists by shortcode with pagination and filters.
 * Author: Ajay Chaudhary
 * Author URI:
 * Requires at least: 4.5
