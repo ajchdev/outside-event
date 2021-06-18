@@ -106,18 +106,6 @@ registerBlockType( 'outside-event-block/slider-block', {
             props.setAttributes( { slidercontents } );
         };
 
-        const handleSliderButtonTextChange = ( sliderbuttontext, index ) => {
-            const slidercontents = [ ...props.attributes.slidercontents ];
-            slidercontents[ index ].sliderbuttontext = sliderbuttontext;
-            props.setAttributes( { slidercontents } );
-        };
-
-        const handleSliderButtonLinkChange = ( sliderbuttonlink, index ) => {
-            const slidercontents = [ ...props.attributes.slidercontents ];
-            slidercontents[ index ].sliderbuttonlink = sliderbuttonlink;
-            props.setAttributes( { slidercontents } );
-        };
-
         let slidercontentFields,slidercontentDisplay;
 
         if ( props.attributes.slidercontents.length ) {
@@ -125,7 +113,6 @@ registerBlockType( 'outside-event-block/slider-block', {
             var fieldcount = props.attributes.slidercontents.length;
             var active = false;
 
-            console.log( props.attributes.slidercontents );
             slidercontentFields = props.attributes.slidercontents.map( ( slidercontent, index ) => {
 
             if( typeof( props.attributes.slidercontents[ index ].sliderimage.medium ) === 'undefined' ){
@@ -182,18 +169,6 @@ registerBlockType( 'outside-event-block/slider-block', {
 
                             </div>
 
-                            <TextControl
-                                placeholder="Button Label"
-                                value={ props.attributes.slidercontents[ index ].sliderbuttontext }
-                                onChange={ ( sliderbuttontext ) => handleSliderButtonTextChange( sliderbuttontext, index ) }
-                            />
-
-                            <TextControl
-                                placeholder="Button Link"
-                                value={ props.attributes.slidercontents[ index ].sliderbuttonlink }
-                                onChange={ ( sliderbuttonlink ) => handleSliderButtonLinkChange( sliderbuttonlink, index ) }
-                            />
-
                         </div>
 
                         <IconButton
@@ -218,7 +193,6 @@ registerBlockType( 'outside-event-block/slider-block', {
 
                 var slidertitle = <h2>{ slidercontent.slidertitle }</h2>
                 var sliderdesc = <p>{ slidercontent.slidercaption }</p>
-                var sliderbutton = <a target="_blank" href={slidercontent.sliderbuttonlink}>{ slidercontent.sliderbuttontext }</a>
 
 
 
@@ -228,7 +202,6 @@ registerBlockType( 'outside-event-block/slider-block', {
                         {imagesrc}
                         {slidertitle}
                         {sliderdesc}
-                        {sliderbutton}
                     </div>
                 );
             } );
@@ -292,7 +265,6 @@ registerBlockType( 'outside-event-block/slider-block', {
 
             var slidertitle = <h2>{ slidercontent.slidertitle }</h2>
             var sliderdesc = <p>{ slidercontent.slidercaption }</p>
-            var sliderbutton = <a target="_blank" href={slidercontent.sliderbuttonlink}>{ slidercontent.sliderbuttontext }</a>
 
 
 
@@ -302,7 +274,6 @@ registerBlockType( 'outside-event-block/slider-block', {
                     {imagesrc}
                     {slidertitle}
                     {sliderdesc}
-                    {sliderbutton}
                 </div>
             );
 
@@ -316,6 +287,8 @@ registerBlockType( 'outside-event-block/slider-block', {
 
                 </div>
             </>
-        )
+        );
+
     }
+
 } );

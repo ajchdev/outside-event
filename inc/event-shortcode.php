@@ -166,12 +166,12 @@ if ( ! class_exists( 'Outside_Event_shortcode' ) ) {
 
             $event_content = wp_remote_get(  home_url().'/wp-json/outside-event/events?'.$data );
             $event_content = isset( $event_content['body'] ) ? $event_content['body'] : '';
-
+            
             if( $event_content ){
 
             $event_content = json_decode( $event_content );
             $event_content = json_decode( $event_content );
-
+            
             echo '<div class="events-lists-wrap">';
 
             foreach( $event_content as $event){ 

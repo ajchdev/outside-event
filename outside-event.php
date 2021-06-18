@@ -79,7 +79,7 @@ if ( ! class_exists( 'Outside_Event_Class' ) ) :
                 array(
                     'ajax_url'   => esc_url( admin_url( 'admin-ajax.php' ) ),
                     'ajax_nonce' => $ajax_nonce,
-                    'no_posts' => esc_html__e('No More Posts','outside-event'),
+                    'no_posts' => esc_html__('No More Posts','outside-event'),
                  )
             );
 

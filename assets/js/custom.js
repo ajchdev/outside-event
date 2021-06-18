@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
                 // $(c_element).closest('.outside-events-lists').find('.events-lists-wrap').empty();
                 $(c_element).closest('.outside-events-lists').find('.events-lists-wrap').append( response );
             }else{
-                $(c_element).closest('.outside-events-lists').find('.otuside-pagination').html( .outside_event_customno_posts );
+                $(c_element).closest('.outside-events-lists').find('.otuside-pagination').html( outside_event_custom.no_posts );
             }
                 
         });
